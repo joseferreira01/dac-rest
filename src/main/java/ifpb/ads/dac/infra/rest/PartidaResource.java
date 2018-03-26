@@ -1,7 +1,9 @@
 package ifpb.ads.dac.infra.rest;
 
 import ifpb.ads.dac.domain.Jogador;
+import ifpb.ads.dac.domain.Partida;
 import ifpb.ads.dac.service.ServiceJogador;
+import ifpb.ads.dac.service.ServicePartida;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,21 +24,21 @@ import javax.ws.rs.core.Response;
  * @since 26/03/2018, 09:02:24
  */
 // .../dac-jogador/api/jogador
-@Path("jogador")
+@Path("partida")
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @Stateless
-public class JogadorResource {
+public class PartidaResource {
 
     @Inject
-    private ServiceJogador service;
+    private ServicePartida service;
 
     @GET
 //    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response recuperarTodos() {
-        List<Jogador> jogadores = service.jogadores();
+        List<Partida> partidas = service.buscarTodos();
 
-        GenericEntity<List<Jogador>> entity
-                = new GenericEntity<List<Jogador>>(jogadores) {
+        GenericEntity<List<Partida>> entity
+                = new GenericEntity<List<Partida>>(partidas) {
         };
 
         return Response.ok()
@@ -46,40 +48,40 @@ public class JogadorResource {
 
     // .../dac-jogador/api/jogador/{id}
     @GET
-    @Path("{id}")
-    public Response recuperarJogador(@PathParam("id") int id) {
-        Jogador jogador = service.jogador(id);
+    @Path("{codigo}")
+    public Response recuperarJogador(@PathParam("codigo") int codigo) {
+        Partida partida = service.buscarPorId(codigo);
         return Response.ok()
-                .entity(jogador)
+                .entity(partida)
                 .build();
     }
 
     // .../dac-jogador/api/jogador/{id}
     @DELETE
-    @Path("{id}")
-    public Response removerJogador(@PathParam("id") int id) {
-        service.remover(id);
+    @Path("{codigo}")
+    public Response removerJogador(@PathParam("codigo") int codigo) {
+        service.remover(codigo);
         return Response.ok() // 200
                 .build();
     }
 
     @POST
-    public Response adicionarJogador(Jogador jogador) {
-        service.add(jogador);
+    public Response adicionarJogador(Partida partida) {
+        service.add(partida);
         return Response.ok()
-                .entity(jogador)
+                .entity(partida)
                 .build();
     }
 
     @PUT
-    @Path("{id}")
+    @Path("{codigo}")
     public Response atualizarJogador(
-            @PathParam("id") int id,
-            Jogador jogador) {
+            @PathParam("codigo") int codigo,
+            Partida partida) {
         
-        service.merge(id,jogador);
+        service.merge(codigo,partida);
         return Response.ok()
-                .entity(jogador)
+                .entity(partida)
                 .build();
     }
 }

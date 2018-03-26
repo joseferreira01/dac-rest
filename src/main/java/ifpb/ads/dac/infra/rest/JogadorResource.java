@@ -33,7 +33,7 @@ public class JogadorResource {
     @GET
 //    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response recuperarTodos() {
-        List<Jogador> jogadores = service.jogadores();
+        List<Jogador> jogadores = service.buscarTodos();
 
         GenericEntity<List<Jogador>> entity
                 = new GenericEntity<List<Jogador>>(jogadores) {
@@ -48,7 +48,7 @@ public class JogadorResource {
     @GET
     @Path("{id}")
     public Response recuperarJogador(@PathParam("id") int id) {
-        Jogador jogador = service.jogador(id);
+        Jogador jogador = service.buscarPorId(id);
         return Response.ok()
                 .entity(jogador)
                 .build();

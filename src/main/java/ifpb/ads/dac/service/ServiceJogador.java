@@ -12,28 +12,33 @@ import javax.persistence.PersistenceContext;
  * @since 26/03/2018, 09:54:41
  */
 @Stateless
-public class ServiceJogador {
+public class ServiceJogador implements Service<Jogador> {
 
     @PersistenceContext
     private EntityManager em;
 
+    @Override
     public void add(Jogador jogador) {
         em.persist(jogador);
     }
 
-    public List<Jogador> jogadores() {
+    @Override
+    public List<Jogador> buscarTodos() {
         return em.createQuery("FROM Jogador j", Jogador.class).getResultList();
     }
 
-    public Jogador jogador(int id) {
+    @Override
+    public Jogador buscarPorId(int id) {
         return em.find(Jogador.class, id);
     }
 
+    @Override
     public void remover(int id) {
         Jogador find = em.find(Jogador.class, id);
         em.remove(find);
     }
 
+    @Override
     public void merge(int id, Jogador jogador) {
         jogador.setId(id);
         em.merge(jogador);

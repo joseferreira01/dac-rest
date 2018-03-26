@@ -1,22 +1,34 @@
 package ifpb.ads.dac.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Ricardo Job
  * @mail ricardo.job@ifpb.edu.br
  * @since 26/03/2018, 10:49:24
  */
-public class Partida {
-
+@Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public class Partida implements Serializable {
+@Id
+@GeneratedValue
     private int codigo;
     private String esporte;
     private LocalDate dataCriacao = LocalDate.now();
     private Status status = Status.CRIADA;
-
+//@ManyToMany
     private List<Jogador> jogadores = new ArrayList<>();
 
     public Partida() {
