@@ -33,6 +33,10 @@ public class Jogador implements Serializable {
         this.foto = foto;
     }
 
+    public static Jogador fake() {
+        return new Jogador(-1, "fake", "link_fake");
+    }
+
     public int getId() {
         return id;
     }
